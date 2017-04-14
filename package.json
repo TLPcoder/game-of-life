@@ -1,0 +1,14 @@
+{
+  "name": "game-of-life",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "url": "https://github.com/TLPcoder/game-of-life.git",
+    "type": "git"
+  },
+  "author": "Trevor Pellegrini <trevorpellegrini@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
