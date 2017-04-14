@@ -1,14 +1,116 @@
-.alive{
-    background-color: green;
-    height:20px;
-    width:20px;
+html, body {
+    margin: 0;
+    padding: 0;
 }
-.dead{
+
+.alive {
+    background-color: #4CAF50;
+    height: 20px;
+    width: 20px;
+}
+
+.dead {
     background-color: black;
-    height:20px;
-    width:20px;
+    height: 20px;
+    width: 20px;
 }
-#board{
-    margin:auto;
+
+#board {
+    margin: auto;
+    margin-bottom: 20px;
     /*width:800px;*/
+}
+
+#nav {
+    color: green;
+    background-color: black;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    bottom: 20px;
+    height: 80px;
+}
+#board-state-controls{
+    text-align: center;
+}
+
+#nav h1 {
+    position: relative;
+    top: 20px;
+}
+
+#footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+}
+button{
+    border: solid 1px #efefef;
+    text-decoration: none;
+    -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+}
+.control-button{
+    margin-bottom: 10px;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    border: solid 1px #4CAF50;
+    color: white;
+    padding: 6px 14px;
+    text-decoration: none;
+    -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+}
+.control-button:hover{
+    background-color: white;
+    color: #4CAF50;
+    border: solid 1px #4CAF50;
+}
+
+#build-board{
+    margin-left: 10px;
+    background-color: #4CAF50;
+    border: solid 1px #4CAF50;
+    font-size: 20px;
+    color: white;
+    padding: 12px 28px;
+    text-decoration: none;
+    -webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+}
+#build-board:hover{
+    background-color: white;
+    color: #4CAF50;
+    border: solid 1px #4CAF50;
+}
+
+#build-board, #board-size{
+    position: relative;
+    top:200px;
+}
+
+#board-size{
+    -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   font-size: 20px;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   height:50px;
+   width: 150px;
 }
