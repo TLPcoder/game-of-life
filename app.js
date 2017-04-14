@@ -1,47 +1,66 @@
 'use strict';
 window.onload = function() {
     var board = document.getElementById('board');
-    var something = document.createElement('h1');
-    something.innerHTML = 'its working';
-    board.appendChild(something);
-    console.log(board);
+    var body = document.getElementsByTagName('body')[0];
     class GameOfLife {
-        constructor() {
+        constructor(size) {
             this.board = [];
-            this.width = 12 +1;
-            this.height = 12 +1;
+            this.width = Number(size);
+            this.height = Number(size);
         }
         startGame() {
-            this.buildBoard();
             setInterval(() => {
                 this.move();
                 console.log(this.board);
-            }, 300);
+            }, 100);
         }
         buildBoard() {
             this.board = [];
-            for (var j = 0; j < this.height; j++) {
+            for (var j = 0; j <= this.height + 1; j++) {
                 var newRow = [];
-                for (var i = 0; i < this.width; i++) {
-                    var cell = {};
-                    cell.button = document.createElement('button');
-                    if (i % 2 === 0) {
-                        cell.status = 1;
-                        cell.className = 'alive';
+                for (var i = 0; i <= this.width + 1; i++) {
+                    if (j === 0 || j === this.height + 1 || i === 0 || i === this.width + 1) {
+                        newRow.push(0);
                     } else {
+                        let cell = {};
+                        cell.button = document.createElement('button');
+                        cell.button.addEventListener('mousedown', () => {
+                            cell.status = 1;
+                            cell.className = 'alive';
+                            cell.button.className = cell.className;
+                        });
                         cell.status = 0;
                         cell.className = 'dead';
+                        cell.button.className = cell.className;
+                        board.appendChild(cell.button);
+                        newRow.push(cell);
                     }
-                    cell.button.className = cell.className;
-                    board.appendChild(cell.button);
-                    newRow.push(cell);
                 }
                 this.board.push(newRow);
             }
+            this.controls();
+        }
+        controls() {
+            boardStateControls.removeChild(buildBoardButton);
+            boardStateControls.removeChild(boardSize);
+            this.start = document.createElement('button');
+            this.clear = document.createElement('button');
+            this.start.innerHTML = 'Start Life';
+            this.clear.innerHTML = 'Clear Board';
+            this.clear.addEventListener('click', () => {
+                this.clearBoard();
+                newGame = null;
+            });
+            this.start.addEventListener('click', () => {
+                this.startGame();
+            });
+            boardStateControls.appendChild(this.clear);
+            boardStateControls.appendChild(this.start);
         }
         move() {
-            for (var i = 1; i < this.board.length -1; i++) {
-                for (var k = 1; k < this.board[i].length-1; k++) {
+            console.log(this.board);
+            for (var i = 1; i < this.board.length - 1; i++) {
+                for (var k = 1; k < this.board[i].length - 1; k++) {
                     var neighbors = this.checkNeighbors(i, k);
                     console.log(neighbors);
                     if (neighbors === 3 && this.board[i][k].status === 0) {
@@ -88,7 +107,37 @@ window.onload = function() {
             }
             return neighbors;
         }
+        clearBoard() {
+            body.removeChild(board);
+            boardStateControls.removeChild(this.clear);
+            boardStateControls.removeChild(this.start);
+            board = document.createElement('div');
+            board.id = 'board';
+            boardStateControls.appendChild(boardSize);
+            boardStateControls.appendChild(buildBoardButton);
+            body.appendChild(board);
+        }
     }
-    var newGame = new GameOfLife();
-    newGame.startGame();
+
+    var newGame = null;
+    var buildBoardButton = document.getElementById('build-board');
+    var boardStateControls = document.getElementById('board-state-controls');
+    var boardSize = document.getElementById('board-size');
+    buildBoardButton.addEventListener('click', () => {
+        newGame = new GameOfLife(boardSize.value);
+        newGame.buildBoard();
+        switch (boardSize.value) {
+            case '20':
+                board.style.marginTop = '150px';
+                board.style.width = "400px";
+                break;
+            case '30':
+                board.style.marginTop = '50px'
+                board.style.width = "600px";
+                break;
+            case '35':
+                board.style.width = "700px";
+                break;
+        }
+    });
 };

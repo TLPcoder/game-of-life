@@ -1,14 +1,14 @@
 .alive{
     background-color: green;
+    height:20px;
+    width:20px;
 }
 .dead{
     background-color: black;
-}
-button{
-    height:30px;
-    width:30px;
+    height:20px;
+    width:20px;
 }
 #board{
     margin:auto;
-    width:410px;
+    /*width:800px;*/
 }
