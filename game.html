@@ -10,14 +10,16 @@
         <div id = 'nav'><h1>Game of Life</h1></div>
         <div id=board-state-controls>
             <select id='board-size' name="size" id="">
-                <option value="20">Choose Size</option>
-                <option value="20">20x20</option>
-                <option value="30">30x30</option>
-                <option value="35">35x35</option>
+                <option value="20 20">Choose Size</option>
+                <option value="20 20">20x20</option>
+                <option value="25 30">25x30</option>
+                <option value="25 40">25x40</option>
             </select>
             <input id='build-board' type="button" value='Build Board'>
         </div>
-        <div id='board'></div>
+        <div id='game-container'>
+            <div id='board'></div>
+        </div>
         <div id=footer><h1>Created By: Trevor and inspired by John Conway's Game of Life</h1></div>
     </body>
 </html>

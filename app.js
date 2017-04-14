@@ -2,11 +2,12 @@
 window.onload = function() {
     var board = document.getElementById('board');
     var body = document.getElementsByTagName('body')[0];
+    var gameContainer = document.getElementById('game-container');
     class GameOfLife {
-        constructor(size) {
+        constructor(width, height) {
             this.board = [];
-            this.width = Number(size);
-            this.height = Number(size);
+            this.width = Number(width);
+            this.height = Number(height);
         }
         startGame() {
             setInterval(() => {
@@ -38,6 +39,7 @@ window.onload = function() {
                 }
                 this.board.push(newRow);
             }
+            console.log(this.board);
             this.controls();
         }
         controls() {
@@ -45,6 +47,8 @@ window.onload = function() {
             boardStateControls.removeChild(boardSize);
             this.start = document.createElement('button');
             this.clear = document.createElement('button');
+            this.clear.className = 'control-button';
+            this.start.className = 'control-button';
             this.start.innerHTML = 'Start Life';
             this.clear.innerHTML = 'Clear Board';
             this.clear.addEventListener('click', () => {
@@ -108,14 +112,15 @@ window.onload = function() {
             return neighbors;
         }
         clearBoard() {
-            body.removeChild(board);
+            console.log(gameContainer)
+            gameContainer.removeChild(board);
             boardStateControls.removeChild(this.clear);
             boardStateControls.removeChild(this.start);
             board = document.createElement('div');
             board.id = 'board';
             boardStateControls.appendChild(boardSize);
             boardStateControls.appendChild(buildBoardButton);
-            body.appendChild(board);
+            gameContainer.appendChild(board);
         }
     }
 
@@ -124,19 +129,19 @@ window.onload = function() {
     var boardStateControls = document.getElementById('board-state-controls');
     var boardSize = document.getElementById('board-size');
     buildBoardButton.addEventListener('click', () => {
-        newGame = new GameOfLife(boardSize.value);
+        newGame = new GameOfLife(boardSize.value[3]+boardSize.value[4],boardSize.value[0]+boardSize.value[1]);
         newGame.buildBoard();
-        switch (boardSize.value) {
+        console.log(boardSize.value[4]+boardSize.value[4])
+        switch (boardSize.value[3]+boardSize.value[4]) {
             case '20':
-                board.style.marginTop = '150px';
+                board.style.marginTop = '30px';
                 board.style.width = "400px";
                 break;
             case '30':
-                board.style.marginTop = '50px'
                 board.style.width = "600px";
                 break;
-            case '35':
-                board.style.width = "700px";
+            case '40':
+                board.style.width = "800px";
                 break;
         }
     });
