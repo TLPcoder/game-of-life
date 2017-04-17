@@ -1,7 +1,6 @@
 'use strict';
 window.onload = function() {
     var board = document.getElementById('board');
-    var body = document.getElementsByTagName('body')[0];
     var gameContainer = document.getElementById('game-container');
     class GameOfLife {
         constructor(width, height) {
