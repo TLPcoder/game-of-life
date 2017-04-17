@@ -76,9 +76,9 @@ window.onload = function() {
                     }
                 }
             }
-            this.appendNewBoard(newBoard);
+            this.newBoard(newBoard);
         }
-        appendNewBoard(newBoard){
+        newBoard(newBoard){
             for(var i = 1; i < this.board.length - 1; i++){
                 for(var j = 1; j < this.board.length - 1; j++){
                     this.board[i][j].button.className = newBoard[i][j].className;
