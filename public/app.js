@@ -12,8 +12,7 @@ window.onload = function() {
         startGame() {
             setInterval(() => {
                 this.move();
-                console.log(this.board);
-            }, 100);
+            }, 500);
         }
         buildBoard() {
             this.board = [];
@@ -39,7 +38,6 @@ window.onload = function() {
                 }
                 this.board.push(newRow);
             }
-            console.log(this.board);
             this.controls();
         }
         controls() {
@@ -62,22 +60,31 @@ window.onload = function() {
             boardStateControls.appendChild(this.start);
         }
         move() {
-            console.log(this.board);
+            let newBoard = JSON.parse(JSON.stringify(this.board));
             for (var i = 1; i < this.board.length - 1; i++) {
                 for (var k = 1; k < this.board[i].length - 1; k++) {
                     var neighbors = this.checkNeighbors(i, k);
-                    console.log(neighbors);
                     if (neighbors === 3 && this.board[i][k].status === 0) {
-                        this.board[i][k].status = 1;
-                        this.board[i][k].className = 'alive';
-                        this.board[i][k].button.className = this.board[i][k].className;
+                        newBoard[i][k].status = 1;
+                        newBoard[i][k].className = 'alive';
+                        newBoard[i][k].button.className = newBoard[i][k].className = 'alive';
                     } else if (neighbors >= 4 || neighbors <= 1) {
-                        this.board[i][k].status = 0;
-                        this.board[i][k].className = 'dead';
-                        this.board[i][k].button.className = this.board[i][k].className;
-                    } else if ((neighbors === 3 || neighbors === 2) && this.board[i][k].status === 1) {
-                        this.board[i][k].status = 1;
+                        newBoard[i][k].status = 0;
+                        newBoard[i][k].className = 'dead';
+                        newBoard[i][k].button.className = newBoard[i][k].className = 'dead';
+                    } else if ((neighbors === 3 || neighbors === 2) && newBoard[i][k].status === 1) {
+                        newBoard[i][k].status = 1;
                     }
+                }
+            }
+            this.appendNewBoard(newBoard);
+        }
+        appendNewBoard(newBoard){
+            for(var i = 1; i < this.board.length - 1; i++){
+                for(var j = 1; j < this.board.length - 1; j++){
+                    this.board[i][j].button.className = newBoard[i][j].className;
+                    this.board[i][j].className = newBoard[i][j].className;
+                    this.board[i][j].status = newBoard[i][j].status;
                 }
             }
         }
@@ -112,7 +119,6 @@ window.onload = function() {
             return neighbors;
         }
         clearBoard() {
-            console.log(gameContainer)
             gameContainer.removeChild(board);
             boardStateControls.removeChild(this.clear);
             boardStateControls.removeChild(this.start);
@@ -128,10 +134,10 @@ window.onload = function() {
     var buildBoardButton = document.getElementById('build-board');
     var boardStateControls = document.getElementById('board-state-controls');
     var boardSize = document.getElementById('board-size');
+
     buildBoardButton.addEventListener('click', () => {
         newGame = new GameOfLife(boardSize.value[3]+boardSize.value[4],boardSize.value[0]+boardSize.value[1]);
         newGame.buildBoard();
-        console.log(boardSize.value[4]+boardSize.value[4])
         switch (boardSize.value[3]+boardSize.value[4]) {
             case '20':
                 board.style.marginTop = '30px';
