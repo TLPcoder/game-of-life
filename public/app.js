@@ -21,24 +21,17 @@ window.onload = function() {
                     if (j === 0 || j === this.height + 1 || i === 0 || i === this.width + 1) {
                         newRow.push(0);
                     } else {
-                        let cell = {};
-                        cell.button = document.createElement('div');
-                        cell.button.addEventListener('mousedown', () => {
-                            if (cell.status === 1) {
-                                cell.status = 0;
+                        let cell = document.createElement('div');
+                        cell.addEventListener('mousedown', () => {
+                            if (cell.className === 'alive') {
                                 cell.className = 'dead';
-                                cell.button.className = cell.className;
                             } else {
-                                cell.status = 1;
                                 cell.className = 'alive';
-                                cell.button.className = cell.className;
                             }
                         });
-                        cell.status = 0;
                         cell.className = 'dead';
-                        cell.button.className = cell.className;
                         this.setSize(cell);
-                        board.appendChild(cell.button);
+                        board.appendChild(cell);
                         newRow.push(cell);
                     }
                 }
@@ -49,20 +42,20 @@ window.onload = function() {
         setSize(cell) {
             switch (this.width) {
                 case 20:
-                    cell.button.style.height = '20px';
-                    cell.button.style.width = '20px';
+                    cell.style.height = '20px';
+                    cell.style.width = '20px';
                     break;
                 case 30:
-                    cell.button.style.height = '16px';
-                    cell.button.style.width = '16px';
+                    cell.style.height = '16px';
+                    cell.style.width = '16px';
                     break;
                 case 40:
-                    cell.button.style.height = '12px';
-                    cell.button.style.width = '12px';
+                    cell.style.height = '12px';
+                    cell.style.width = '12px';
                     break;
                 case 50:
-                    cell.button.style.height = '10px';
-                    cell.button.style.width = '10px';
+                    cell.style.height = '10px';
+                    cell.style.width = '10px';
                     break;
             }
         }
@@ -87,58 +80,55 @@ window.onload = function() {
         }
         move() {
             let newBoard = JSON.parse(JSON.stringify(this.board));
-            for (var i = 1; i < this.board.length - 1; i++) {
-                for (var k = 1; k < this.board[i].length - 1; k++) {
+            for (var i = 1; i < newBoard.length - 1; i++) {
+                for (var k = 1; k < newBoard[i].length - 1; k++) {
                     var neighbors = this.checkNeighbors(i, k);
-                    if (neighbors === 3 && this.board[i][k].status === 0) {
-                        newBoard[i][k].status = 1;
+                    if (neighbors === 3 && this.board[i][k].className === 'dead') {
                         newBoard[i][k].className = 'alive';
-                        newBoard[i][k].button.className = newBoard[i][k].className = 'alive';
                     } else if (neighbors >= 4 || neighbors <= 1) {
-                        newBoard[i][k].status = 0;
                         newBoard[i][k].className = 'dead';
-                        newBoard[i][k].button.className = newBoard[i][k].className = 'dead';
-                    } else if ((neighbors === 3 || neighbors === 2) && newBoard[i][k].status === 1) {
-                        newBoard[i][k].status = 1;
+                    } else if ((neighbors === 3 || neighbors === 2) && this.board[i][k].className === 'alive') {
+                        newBoard[i][k].className = 'alive';
+                    } else {
+                        newBoard[i][k].className = 'dead';
                     }
                 }
             }
             this.newBoard(newBoard);
+            console.log(newBoard);
         }
         newBoard(newBoard) {
             for (var i = 1; i < this.board.length - 1; i++) {
                 for (var j = 1; j < this.board.length - 1; j++) {
-                    this.board[i][j].button.className = newBoard[i][j].className;
                     this.board[i][j].className = newBoard[i][j].className;
-                    this.board[i][j].status = newBoard[i][j].status;
                 }
             }
         }
         checkNeighbors(m, s) {
             var neighbors = 0;
             if (m > 0 && m < this.board.length - 2) {
-                if (this.board[m][s + 1].status === 1) {
+                if (this.board[m][s + 1].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m][s - 1].status === 1) {
+                if (this.board[m][s - 1].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m + 1][s].status === 1) {
+                if (this.board[m + 1][s].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m - 1][s].status === 1) {
+                if (this.board[m - 1][s].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m + 1][s + 1].status === 1) {
+                if (this.board[m + 1][s + 1].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m + 1][s - 1].status === 1) {
+                if (this.board[m + 1][s - 1].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m - 1][s - 1].status === 1) {
+                if (this.board[m - 1][s - 1].className === 'alive') {
                     neighbors += 1;
                 }
-                if (this.board[m - 1][s + 1].status === 1) {
+                if (this.board[m - 1][s + 1].className === 'alive') {
                     neighbors += 1;
                 }
             }
