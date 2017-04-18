@@ -10,7 +10,7 @@ window.onload = function() {
         }
         startGame() {
             setInterval(() => {
-                this.move();
+            this.move();
             }, 500);
         }
         buildBoard() {
@@ -22,15 +22,22 @@ window.onload = function() {
                         newRow.push(0);
                     } else {
                         let cell = {};
-                        cell.button = document.createElement('button');
+                        cell.button = document.createElement('div');
                         cell.button.addEventListener('mousedown', () => {
-                            cell.status = 1;
-                            cell.className = 'alive';
-                            cell.button.className = cell.className;
+                            if (cell.status === 1) {
+                                cell.status = 0;
+                                cell.className = 'dead';
+                                cell.button.className = cell.className;
+                            } else {
+                                cell.status = 1;
+                                cell.className = 'alive';
+                                cell.button.className = cell.className;
+                            }
                         });
                         cell.status = 0;
                         cell.className = 'dead';
                         cell.button.className = cell.className;
+                        this.setSize(cell);
                         board.appendChild(cell.button);
                         newRow.push(cell);
                     }
@@ -38,6 +45,26 @@ window.onload = function() {
                 this.board.push(newRow);
             }
             this.controls();
+        }
+        setSize(cell) {
+            switch (this.width) {
+                case 20:
+                    cell.button.style.height = '20px';
+                    cell.button.style.width = '20px';
+                    break;
+                case 30:
+                    cell.button.style.height = '16px';
+                    cell.button.style.width = '16px';
+                    break;
+                case 40:
+                    cell.button.style.height = '12px';
+                    cell.button.style.width = '12px';
+                    break;
+                case 50:
+                    cell.button.style.height = '10px';
+                    cell.button.style.width = '10px';
+                    break;
+            }
         }
         controls() {
             boardStateControls.removeChild(buildBoardButton);
@@ -78,9 +105,9 @@ window.onload = function() {
             }
             this.newBoard(newBoard);
         }
-        newBoard(newBoard){
-            for(var i = 1; i < this.board.length - 1; i++){
-                for(var j = 1; j < this.board.length - 1; j++){
+        newBoard(newBoard) {
+            for (var i = 1; i < this.board.length - 1; i++) {
+                for (var j = 1; j < this.board.length - 1; j++) {
                     this.board[i][j].button.className = newBoard[i][j].className;
                     this.board[i][j].className = newBoard[i][j].className;
                     this.board[i][j].status = newBoard[i][j].status;
@@ -135,18 +162,19 @@ window.onload = function() {
     var boardSize = document.getElementById('board-size');
 
     buildBoardButton.addEventListener('click', () => {
-        newGame = new GameOfLife(boardSize.value[3]+boardSize.value[4],boardSize.value[0]+boardSize.value[1]);
+        newGame = new GameOfLife(boardSize.value[3] + boardSize.value[4], boardSize.value[0] + boardSize.value[1]);
         newGame.buildBoard();
-        switch (boardSize.value[3]+boardSize.value[4]) {
+        switch (boardSize.value[3] + boardSize.value[4]) {
             case '20':
                 board.style.marginTop = '30px';
-                board.style.width = "400px";
+                board.style.width = "450px";
                 break;
             case '30':
-                board.style.width = "600px";
+                board.style.width = "550px";
                 break;
             case '40':
-                board.style.width = "800px";
+                board.style.marginTop = '-10px';
+                board.style.width = "570px";
                 break;
         }
     });

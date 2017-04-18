@@ -5,14 +5,14 @@ html, body {
 
 .alive {
     background-color: #4CAF50;
-    height: 20px;
-    width: 20px;
+    border: solid grey 1px;
+    float: left;
 }
 
 .dead {
     background-color: black;
-    height: 20px;
-    width: 20px;
+    border: solid gray 1px;
+    float: left;
 }
 
 #board {
